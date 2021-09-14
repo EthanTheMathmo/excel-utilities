@@ -10,7 +10,8 @@ as the length of the names, and whether the names are alphanumeric strings
 TO-DO: make this work for Excel sheets stored non-locally.
 
 TO-DO. Obviously we need to ask user for where they want the save location,
-rather than hardcoding it in here!
+rather than hardcoding it in here! and maybe ask if they want us to open it afterwards
+
 
 Also TO-DO: this requires the version of the workbook the user wants to perform this
 on to be saved, so maybe a notification for this
@@ -54,7 +55,8 @@ def generic_string_info(input_string):
            "Length": len(input_string),
            "alpha only?": input_string.isalpha(),
            "numeric only?": input_string.isnumeric(),
-           "alpha num only?": input_string.isalnum()}
+           "alpha num only?": input_string.isalnum(),
+           "non alpha num": [char for char in input_string if not char.isalnum()]}
 
 
 wb = openpyxl.Workbook(write_only=True)
@@ -91,4 +93,7 @@ for j in range(1, ws_row+1):
         row.append(cell)
     print(row)
     ws.append(row)
-wb.save(save_location)            
+wb.save(save_location)       
+
+
+xw.Book(save_location) #open the output
