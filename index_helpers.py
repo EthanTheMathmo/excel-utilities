@@ -3,6 +3,8 @@ import string
 
 def convert_to_tuple(cell_address):
     """
+    Converts from Excel A1 stype notation to cartesian (1,1) styple notation
+
     e.g. converts A1 to (1,1), converts AC1 to (1*26 + 3,1) DE1 to (4*26+5,1), CZE to (3*26^2 + 26*26^1 + 5*26^0)
     bit of a headache, but with some messing about it makes sense!
     """
@@ -76,6 +78,10 @@ def block_to_list(block_address):
     return ",".join([",".join([convert_from_tuple((i,j)) for j in range(first_tuple[1], last_tuple[1]+1)]) for i in range(first_tuple[0], last_tuple[0]+1)])
 
 
+def AZ_to_base10(address):
+    """converts from AZ notation to a normal number (written in base 10)"""
+    return sum([(ord(x[1])-64)*26**x[0] for x in enumerate(reversed(address))])
+
 def char_lim_255(address):
     """
     breaks a string of addresses into ones which are sub<255 chars
@@ -96,7 +102,7 @@ def char_lim_255(address):
 
 def next_down(cell_address):
     """
-    given a cell, say, $B$6, this returns the address of the next cell down, in this case $B$7
+    given a cell, say, $B$6, this returns the address of the next cell down, in this example, $B$7
     """
     address_split = cell_address.split("$")
     address_split[-1] = str(int(address_split[-1])+1)
