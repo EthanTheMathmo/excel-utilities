@@ -1,3 +1,11 @@
+"""
+TO-DO:
+-write tests
+-error checking, e.g., columns being the same length etc
+-sensible way of dealing with user selecting blocks rather than cols
+"""
+
+
 import xlwings as xw
 import PySimpleGUI as sg
 from index_helpers import block_to_list, next_down
