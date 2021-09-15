@@ -76,9 +76,7 @@ for j in range(1, ws_row+1):
         #i counts along the columns, i.e. A,B,C,D,...
         cell=openpyxl.cell.WriteOnlyCell(ws)
         if (i,j) in cells_to_hide:
-            print("hi")
             if ws_pyxl[convert_from_tuple((i,j))].value != None:
-                print("hi")
                 cell.fill = fill_for_hidden_cells
                 value_in_sheet = ws_pyxl[convert_from_tuple((i,j))].value
                 cell.value = str(type(value_in_sheet))
