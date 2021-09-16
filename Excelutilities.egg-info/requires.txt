@@ -1,0 +1,3 @@
+PySimpleGUI>=4.0.0
+xlwings>=0.24.0
+openpyxl>=3.0.0
