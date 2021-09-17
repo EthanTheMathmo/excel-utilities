@@ -126,3 +126,4 @@ def next_along(cell_address):
     """
     cell_tuple = convert_to_tuple(cell_address)
     return convert_from_tuple((cell_tuple[0]+1, cell_tuple[1]))
+

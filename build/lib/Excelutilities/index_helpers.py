@@ -16,7 +16,7 @@ digs = "0" + string.ascii_letters[-26:]
 #from SO
 def int2base(x, base):
     """
-    function from SO. Benefit that is definitely works. Was a bit lazy to take it but oh well
+    function from SO. Benefit that it works. Was a bit lazy to take it but oh well
     """
     if x < 0:
         sign = -1
@@ -39,24 +39,36 @@ def int2base(x, base):
 
     return ''.join(digits)
 
-def h(chunk):
-    """
-    helper function for convert from tuple
-    """
-    chunk=chunk.group()
-    if chunk == "":
-        return ""
-    elif chunk[0] == "A":
-        return "Z"*len(chunk[:-1])
-    else:
-        char = chunk[0]
-        return chr(ord(char)-1)+"Z"
+def convert_base_26_to_base_26_no_zero(num):
+    #num should be a string, with no zero at the front
+    for index, dig in enumerate(num):
+        if dig=="0":
+            prev_char = num[index-1]
+            if prev_char != "A":
+                #e.g. C0D goes to BZD, and we perform the step again on BZD
+                #e.g. AFC0A0 would go to AFBZA0, and then we run the function on AFBZA0
+                return convert_base_26_to_base_26_no_zero(num[:index-1]+chr(ord(num[index-1])-1)+"Z"+num[index+1:])
+            else:
+                #the previous character was an A, in which case things are different:
+                #A0 goes to 0Z
+                #e.g. BA0 goes to B0Z, and then we perform the recusrive step
+                if index-1 == 0:
+                    #e.g. A00ZZ, we convert to Z0ZZ
+                    return convert_base_26_to_base_26_no_zero("Z"+num[2:])
+                else:
+                    #not at start, so there are characters in front of it, e.g. AA0 or BXASA0A
+                    #recall, num[index-1] = "A" currently
+                    return convert_base_26_to_base_26_no_zero(num[:index-1]+ "0" + "Z" + num[index+1:])
+                
+        else:
+            pass
+    return num
 
 def convert_from_tuple(tuple_address):
     """
     Takes a cell, say, (1,1) and returns it in excel notation A1
     """
-    return re.sub("A{1,}0||[B-Z]0",h,int2base(tuple_address[0],26))+str(tuple_address[1])
+    return convert_base_26_to_base_26_no_zero(int2base(tuple_address[0],26))+str(tuple_address[1])
 
 
 def block_to_list(block_address):
@@ -114,3 +126,7 @@ def next_along(cell_address):
     """
     cell_tuple = convert_to_tuple(cell_address)
     return convert_from_tuple((cell_tuple[0]+1, cell_tuple[1]))
+
+
+def adding_one(x):
+    return x+1
