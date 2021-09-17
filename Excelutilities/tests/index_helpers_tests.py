@@ -15,6 +15,7 @@ class TestTupleConversion(unittest.TestCase):
         self.assertEqual(convert_to_tuple("AZ36"), (52,36))
         self.assertEqual(convert_to_tuple("ZBG19"), (26**2*26+26**1*2+26**0*7,19))
 
+
     def test_convert_from_tuple_small(self, convert_from_tuple = index_helpers.convert_from_tuple):
         """
         Implements a small number of tests for the convert_from_tuple function, but the 
@@ -37,5 +38,6 @@ class TestTupleConversion(unittest.TestCase):
 
         for x,y in zip([convert_to_tuple(convert_from_tuple(x)) for x in random_numbers], random_numbers):
             self.assertEqual(x,y)
+
 if __name__ == '__main__':
     unittest.main()
