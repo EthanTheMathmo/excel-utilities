@@ -52,6 +52,14 @@ class TestTupleConversion(unittest.TestCase):
         self.assertEqual(convert_base_26_to_base_26_no_zero('C0D'), 'BZD')
         self.assertEqual(convert_base_26_to_base_26_no_zero('BA0'), 'AZZ')
         
+        
+    def test_convert_from_tuple_small(self, convert_from_tuple = index_helpers.convert_from_tuple):
+        self.assertEqual(convert_from_tuple((1, 1)), 'A1')
+        self.assertEqual(convert_from_tuple((26**2*1+26*2+3, 123), 'ABC123')
+    
+    def test_block_to_list(self, block_to_list = index_helpers.block_to_list):
+        self.assertEqual(block_to_list('$A$1:$B$2'), 'A1,A2,B1,B2')
+                         
     
         
 
