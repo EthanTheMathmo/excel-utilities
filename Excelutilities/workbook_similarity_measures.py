@@ -37,13 +37,13 @@ def replace_string(x):
 METHOD 1. Turn the ws into a csv format and use string similarity algorithms
 """
 
-def similarity_values_only(book1, sheet1, book2, sheet2, 
+def similarity_values_only(book1, sheetname1, book2, sheetname2, 
             similarity_function=lambda x,y: difflib.SequenceMatcher(None, x,y).ratio()):
     books = [book1, book2]
 
     book_strings = []
 
-    sheets = [sheet1, sheet2]
+    sheets = [sheetname1, sheetname2]
 
     for book, sheet in zip(books, sheets):
         xlsx_filename=book
@@ -112,7 +112,7 @@ def convert_array_to_values_to_indices(data_array):
 
 ###END OF HELPER FUNCTIONS FOR METHOD 2
 
-def avg_val_distance_similarity(book1, sheet1, book2, sheet2, default_val_for_non_matches, max_distance=None):
+def avg_val_distance_similarity(book1, sheetname1, book2, sheetname2, default_val_for_non_matches, max_distance=None):
     """
     Given two sheets, calculates the distance_val_similarity method of the first to the second, and the second to the first
     (which are not necessarily the same)
@@ -128,7 +128,7 @@ def avg_val_distance_similarity(book1, sheet1, book2, sheet2, default_val_for_no
     if max_distance==None:
         max_distance = default_val_for_non_matches
     
-    sheets = [sheet1, sheet2]
+    sheets = [sheetname1, sheetname2]
     
     books = [book1, book2]
     
