@@ -4,7 +4,8 @@ from setuptools import setup, find_packages
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
 
-requirements = ["PySimpleGUI>=4.0.0", "xlwings>=0.24.0", "openpyxl>=3.0.0", "numpy>=1.20.0"]
+requirements = ["PySimpleGUI>=4.0.0", "xlwings>=0.24.0", "openpyxl>=3.0.0", 
+        "numpy>=1.20.0", "jellyfish>=0.8.8"]
 
 setup(
     name="Excelutilities",
