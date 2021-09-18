@@ -43,7 +43,9 @@ def similarity_values_only(book1, sheet1, book2, sheet2,
 
     book_strings = []
 
-    for book in books:
+    sheets = [sheet1, sheet2]
+
+    for book, sheet in zip(books, sheets):
         xlsx_filename=book
         import csv
         with open(xlsx_filename, "rb") as f:
@@ -53,7 +55,7 @@ def similarity_values_only(book1, sheet1, book2, sheet2,
 
         wb = openpyxl.load_workbook(in_mem_file, read_only=True)
 
-        ws = wb["Sheet1"]
+        ws = wb[sheet]
 
         no_empties = remove_empty_rows_and_columns_ws(ws)
         book_string = "\n".join([replace_row(row) for row in no_empties])
