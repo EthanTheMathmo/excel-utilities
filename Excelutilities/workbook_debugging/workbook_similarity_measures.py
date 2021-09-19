@@ -14,6 +14,20 @@ TO-DO.
 """
 
 
+"""
+LITERAL EQUIVALENCE
+"""
+def literally_the_same_empties_deleted(wb1, sheetname1, wb2, sheetname2):
+    #checks if two sheets are identical, after removing empty rows and columns
+    ws1 = wb1[sheetname1]
+    ws2 = wb2[sheetname2]
+    data_1 = remove_empty_rows_and_columns_ws(ws1)
+    data_2 = remove_empty_rows_and_columns_ws(ws2)
+    return data_1==data_2
+
+
+
+
 # two helper functions
 def replace_row(row):
     """
