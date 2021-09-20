@@ -5,7 +5,7 @@ import openpyxl
 import numpy as np
 import io
 
-from Excelutilities.workbook_debugging.worksheet_cleaning_utilities import remove_empty_rows_and_columns_ws
+from Excelutilities.cleaning_utilities.worksheet_cleaning_utilities import remove_empty_rows_and_columns_ws
 import difflib
 """
 TO-DO. 

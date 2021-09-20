@@ -5,7 +5,7 @@ workbooks
 import PySimpleGUI as sg
 import xlwings as xw
 import jellyfish
-from Excelutilities.workbook_debugging.worksheet_cleaning_utilities import remove_empty_rows_and_columns_array
+from Excelutilities.cleaning_utilities.worksheet_cleaning_utilities import remove_empty_rows_and_columns_array
 
 
 def compare_rows():
