@@ -1,6 +1,6 @@
 #Only a stub, to see if the code runs. 
 
-from Excelutilities.workbook_similarity_measures import similarity_values_only
+from Excelutilities.workbook_debugging.workbook_similarity_measures import similarity_values_only
 
 book2 = r"C:\Users\ethan\OneDrive\Documents\workbook similarity test 2.xlsx"
 book1 = r"C:\Users\ethan\OneDrive\Documents\test for similarity.xlsx"

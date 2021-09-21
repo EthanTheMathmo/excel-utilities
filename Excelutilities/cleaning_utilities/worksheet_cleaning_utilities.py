@@ -10,11 +10,19 @@ had a noticeable time lag from python implementation on smallish (<1000 rows) wo
 """
 
 import numpy as np
+import openpyxl
+def return_vals_input_openpyxl_ws_output_val_list(ws):
+    """
+    Input: an openpyxl worksheet
+    Output: a list of values for that worksheet
+    """
+    return [list(row) for row in ws.values]
+
 
 def remove_empty_rows_and_columns_input_openpyxl_iterable_output_cell_list(ws_block):
     """
-    Given an input -ws_block- of an interable of openpyxl cells, we remove empties and return as a
-    list of openpyxl cells
+    Input: an iterable of openpyxl cells (NOT an openpyxl worksheet)
+    Output: a list of the values of the iterable, with empty rows and columns removed
     """
     npa_val=np.array([[cell.value for cell in row] for row in ws_block])
     npa = np.array([[cell for cell in row] for row in ws_block])

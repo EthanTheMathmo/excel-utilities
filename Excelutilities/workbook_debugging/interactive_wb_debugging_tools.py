@@ -5,10 +5,17 @@ workbooks
 import PySimpleGUI as sg
 import xlwings as xw
 import jellyfish
-from Excelutilities.cleaning_utilities.worksheet_cleaning_utilities import remove_empty_rows_and_columns_array
+from Excelutilities.cleaning_utilities.worksheet_cleaning_utilities import remove_empty_rows_and_columns_input_val_list_output_val_list
 
 
-def compare_rows():
+def compare_rows(wb_loc = None):
+    """
+    Given two groups of rows this compares values from the first to the second, and returns a list of all values in the 
+    first group of rows but not the second
+    """
+    if wb_loc != None:
+        xw.Book(wb_loc)
+
     user_input_1 = sg.popup_ok_cancel('Please open the first workbook or sheet, and select the rows.\nPress ok when finished.')
     if user_input_1 == "OK":
         values1 = xw.apps.active.books.active.selection.value
@@ -22,8 +29,8 @@ def compare_rows():
         sg.popup("You have now terminated the application")
     user_input_3 = sg.popup_yes_no("Do you blank columns and rows to be removed?")
     if user_input_3 == "Yes":
-        values1 = remove_empty_rows_and_columns_array(values1)
-        values2 = remove_empty_rows_and_columns_array(values2)
+        values1 = remove_empty_rows_and_columns_input_val_list_output_val_list(values1)
+        values2 = remove_empty_rows_and_columns_input_val_list_output_val_list(values2)
     else:
         pass
 
@@ -41,7 +48,7 @@ def compare_rows():
                 pass
             else:
                 in_values1_but_not_values2.append(row)
-    print(in_values1_but_not_values2)
     return in_values1_but_not_values2
 
-compare_rows()
+if __name__ == "__main__":
+    compare_rows()

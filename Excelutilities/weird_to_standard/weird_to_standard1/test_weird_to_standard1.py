@@ -33,6 +33,7 @@ class TestStringMethods(unittest.TestCase):
         test_array = remove_empty_rows_and_columns_input_ws_output_val_list(ws)
 
         wb.close()
+        
         self.assertEqual(return_array,test_array)
 if __name__ == '__main__':
     unittest.main()
