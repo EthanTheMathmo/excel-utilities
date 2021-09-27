@@ -127,24 +127,3 @@ def next_along(cell_address):
     cell_tuple = convert_to_tuple(cell_address)
     return convert_from_tuple((cell_tuple[0]+1, cell_tuple[1]))
 
-def is_row_block_bool(address):
-    """
-    Given cell addresses as a string, returns True if it is a row,
-    e.g., A1,A2,A3 returns True
-    e.g., A1, B1 returns False
-    e.g., A1:A4 returns True
-    e.g., A1:A4,A5 returns True
-    E.g., A1:A4,A6 returns False
-    """
-    as_list = block_to_list(address).split(",")
-    if len(as_list) == 1:
-        return True
-    else:
-        for i in range(len(as_list)-1):
-            current_cell = as_list[i]
-            next_cell = as_list[i+1]
-            if next_cell == next_along(current_cell):
-                continue
-            else:
-                return False
-    
