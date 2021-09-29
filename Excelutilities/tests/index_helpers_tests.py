@@ -71,6 +71,7 @@ class TestTupleConversion(unittest.TestCase):
         self.assertEqual(is_row_block_bool('B1:B12'), True)
         self.assertEqual(is_row_block_bool('A1:A5,A7'), False)
         self.assertEqual(is_row_block_bool("Z1:AA22"), False)
+        self.assertEqual(is_row_block_bool('A7,A1:A5,A6'), True)
 
 
 

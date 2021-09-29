@@ -138,6 +138,18 @@ def next_down(cell_address):
     cell_tuple = convert_to_tuple(cell_address)
     return convert_from_tuple((cell_tuple[0]+1, cell_tuple[1]))
 
+def return_address_col_index(address):
+    """
+    E.g., "A1" -> 1, "C13" -> 13, "AA22" -> 22
+    """
+    return int("".join([x for x in address if not x.isalpha()]))
+
+def return_address_row_index(address):
+    """
+    E.g., "A1" -> A, "C13" -> C, "AA22" -> AA
+    """
+    return "".join([x for x in address if x.isalpha()])
+
 def is_row_block_bool(address):
     """
     Given cell addresses as a string, returns True if it is a row,
@@ -149,6 +161,12 @@ def is_row_block_bool(address):
     """
     chunks = address.split(",")
     as_list = [cell for block in chunks for cell in block_to_list(block).split(",")]
+    
+    #Next we sort this list by second index. E.g., A2,A3,A1 would be 
+    #sorted to A1,A2,A3. 
+    as_list.sort(key=lambda address:convert_to_tuple(address)[1])
+    
+    
     if len(as_list) == 1:
         return True
     else:
@@ -162,5 +180,8 @@ def is_row_block_bool(address):
 
     return True
 
+
+def is_col_block():
+    return
 
     
