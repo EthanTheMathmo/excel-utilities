@@ -73,7 +73,9 @@ def convert_from_tuple(tuple_address):
 
 def block_to_list(block_address):
     """
-    E.g., converts $A$1:$B$2 to $A$1,$A$2,$B$1,$B$2
+    E.g., converts $A$1:$B$2 to A1,A2,B1,B2
+
+    E.g. converts A1:B2 into A1,A2,B1,B2
     """
     first_and_last = block_address.split(":")
 
@@ -112,18 +114,93 @@ def char_lim_255(address):
 
 
 
-def next_down(cell_address):
-    """
-    given a cell, say, $B$6, this returns the address of the next cell down, in this example, $B$7
-    """
-    address_split = cell_address.split("$")
-    address_split[-1] = str(int(address_split[-1])+1)
-    return "$".join( address_split)
-
 def next_along(cell_address):
     """
-    Given a cell, say, $B$6, returns the next cell along, in this case, $C$6
+    given a cell, say, $B$6, this returns the address of the next cell along, in this example, $B$7
+    
+    Also works for the address being written in B6 style (without the $)
+    
+    The style is preserved. So A6->A7, and $A$6 -> $A$7
+    """
+    if "$" in cell_address:
+        address_split = cell_address.split("$")
+        address_split[-1] = str(int(address_split[-1])+1)
+        return "$".join( address_split)
+    else:
+        address_split = re.findall(r"[^\W\d_]+|\d+", cell_address) #splits into alpha and numeric parts
+        address_split[-1] = str(int(address_split[-1])+1)
+        return "".join(address_split)
+
+def next_down(cell_address):
+    """
+    Given a cell, say, $B$6, returns the next cell down, in this case, $C$6
     """
     cell_tuple = convert_to_tuple(cell_address)
     return convert_from_tuple((cell_tuple[0]+1, cell_tuple[1]))
 
+def return_address_col_index(address):
+    """
+    E.g., "A1" -> 1, "C13" -> 13, "AA22" -> 22
+    """
+    return int("".join([x for x in address if not x.isalpha()]))
+
+def return_address_row_index(address):
+    """
+    E.g., "A1" -> A, "C13" -> C, "AA22" -> AA
+    """
+    return "".join([x for x in address if x.isalpha()])
+
+def is_row_block_bool(address):
+    """
+    Given cell addresses as a string, returns True if it is a row,
+    e.g., A1,A2,A3 returns True
+    e.g., A1, B1 returns False
+    e.g., A1:A4 returns True
+    e.g., A1:A4,A5 returns True
+    E.g., A1:A4,A6 returns False
+    """
+    chunks = address.split(",")
+    as_list = [cell for block in chunks for cell in block_to_list(block).split(",")]
+    
+    #Next we sort this list by second index. E.g., A2,A3,A1 would be 
+    #sorted to A1,A2,A3. 
+    as_list.sort(key=lambda address:convert_to_tuple(address)[1])
+    
+    
+    if len(as_list) == 1:
+        return True
+    else:
+        for i in range(len(as_list)-1):
+            current_cell = as_list[i]
+            next_cell = as_list[i+1]
+            if next_cell == next_along(current_cell):
+                continue
+            else:
+                return False
+
+    return True
+
+
+def is_col_block_bool(address):
+    chunks = address.split(",")
+    as_list = [cell for block in chunks for cell in block_to_list(block).split(",")]
+    
+    #Next we sort this list by second index. E.g., A2,A3,A1 would be 
+    #sorted to A1,A2,A3. 
+    as_list.sort(key=lambda address:convert_to_tuple(address)[0])
+    
+    
+    if len(as_list) == 1:
+        return True
+    else:
+        for i in range(len(as_list)-1):
+            current_cell = as_list[i]
+            next_cell = as_list[i+1]
+            if next_cell == next_down(current_cell):
+                continue
+            else:
+                return False
+
+    return True
+
+    

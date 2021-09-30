@@ -5,7 +5,6 @@ from Excelutilities import index_helpers
 from numpy import random
 
 class TestTupleConversion(unittest.TestCase):
-    #RUAIRIDH: when writing tests, the function name has to begin with test_<rest of name> for unittest.main() to find it
     def test_convert_to_tuple_small(self, convert_to_tuple=index_helpers.convert_to_tuple):
         """
         Implements a small number of tests for convert_to_tuple, but the tests 
@@ -55,13 +54,38 @@ class TestTupleConversion(unittest.TestCase):
         
     def test_convert_from_tuple_small(self, convert_from_tuple = index_helpers.convert_from_tuple):
         self.assertEqual(convert_from_tuple((1, 1)), 'A1')
-        self.assertEqual(convert_from_tuple((26**2*1+26*2+3, 123), 'ABC123'))
+        self.assertEqual(convert_from_tuple((26**2*1+26*2+3, 123)), 'ABC123')
     
     def test_block_to_list(self, block_to_list = index_helpers.block_to_list):
         self.assertEqual(block_to_list('$A$1:$B$2'), 'A1,A2,B1,B2')
-                         
+        self.assertEqual(block_to_list('A1:B2'), 'A1,A2,B1,B2')
+
+    def test_next_along(self, next_along=index_helpers.next_along):
+        self.assertEqual(next_along("AZ1"), "AZ2")
+        self.assertEqual(next_along("B6"), "B7")
+        self.assertEqual(next_along("ZZ54"), "ZZ55")
+
+       
+    def test_next_down(self, next_down=index_helpers.next_down):
+        self.assertEqual(next_down("AB6"), "AC6")
+        self.assertEqual(next_down("D2"), "E2")
+        self.assertEqual(next_down("ZZ36"), "AAA36")
+        self.assertEqual(next_down("ZZA234"), "ZZB234")
+
+    def test_is_row_block_bool(self, is_row_block_bool=index_helpers.is_row_block_bool):
+        self.assertEqual(is_row_block_bool('A1:A5,A6'), True)
+        self.assertEqual(is_row_block_bool('B1:B12'), True)
+        self.assertEqual(is_row_block_bool('A1:A5,A7'), False)
+        self.assertEqual(is_row_block_bool("Z1:AA22"), False)
+        self.assertEqual(is_row_block_bool('A7,A1:A5,A6'), True)
     
-        
+    def test_is_col_block_bool(self, is_col_block_bool=index_helpers.is_col_block_bool):
+        self.assertEqual(is_col_block_bool("A3,A4"),False)
+        self.assertEqual(is_col_block_bool("A3,B3"),True)
+        self.assertEqual(is_col_block_bool("A1,C1,B1"),True)
+        self.assertEqual(is_col_block_bool("AA1,C1:Z1,AB1:AZ1"),True)
+        self.assertEqual(is_col_block_bool("A3,B4"),False)
+
 
 if __name__ == '__main__':
     unittest.main()

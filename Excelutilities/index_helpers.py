@@ -181,7 +181,26 @@ def is_row_block_bool(address):
     return True
 
 
-def is_col_block():
-    return
+def is_col_block_bool(address):
+    chunks = address.split(",")
+    as_list = [cell for block in chunks for cell in block_to_list(block).split(",")]
+    
+    #Next we sort this list by second index. E.g., A2,A3,A1 would be 
+    #sorted to A1,A2,A3. 
+    as_list.sort(key=lambda address:convert_to_tuple(address)[0])
+    
+    
+    if len(as_list) == 1:
+        return True
+    else:
+        for i in range(len(as_list)-1):
+            current_cell = as_list[i]
+            next_cell = as_list[i+1]
+            if next_cell == next_down(current_cell):
+                continue
+            else:
+                return False
+
+    return True
 
     
