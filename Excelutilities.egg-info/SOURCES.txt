@@ -2,6 +2,7 @@ README.md
 setup.py
 Excelutilities/__init__.py
 Excelutilities/attach_data.py
+Excelutilities/importing_data_helpers.py
 Excelutilities/index_helpers.py
 Excelutilities/worksheet_remove_data.py
 Excelutilities.egg-info/PKG-INFO
