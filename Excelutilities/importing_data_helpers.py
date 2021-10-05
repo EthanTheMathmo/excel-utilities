@@ -6,8 +6,10 @@ import xlwings as xw
 import PySimpleGUI as sg
 import sys
 from Excelutilities.index_helpers import is_col_block_bool,  is_row_block_bool
+import decimal
+import datetime
 
-def add_col_data_from_another_sheet(col_name_1, col_name_2, allowed_data_types):
+def add_col_data_from_another_sheet(col_name_1, col_name_2, allowed_data_types=[float, int, decimal.Decimal,datetime.datetime, str]):
     """
     Let col_name_1 be some column with some attribute col_name_2. We then want to add 
     the values of col_name_2 from one sheet to a second sheet

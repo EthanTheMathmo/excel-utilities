@@ -8,7 +8,7 @@ TO-DO:
 
 import xlwings as xw
 import PySimpleGUI as sg
-from index_helpers import block_to_list, next_down
+from Excelutilities.index_helpers import block_to_list, next_down
 import os
 
 def folder_address_gui():
