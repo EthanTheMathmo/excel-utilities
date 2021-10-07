@@ -203,4 +203,33 @@ def is_row_block_bool(address):
 
     return True
 
+def first_and_last_row_index(address):
+    """
+    Given a user selection of addresses (e.g., "A1:B6,C2:D3") this returns
+    the first and last row which includesa cell from of those addresses
+    """
+    address = address.replace("$","") # removes $ signs in Excel address
+    address_chunks = address.split(",")
+    minimum_index = None
+    maximum_index = None
+    for chunk in address_chunks:
+        if ":" in chunk:
+            first_index, second_index = chunk.split(":")
+        else:
+            first_index = chunk
+            second_index=chunk
+        first_row_index, last_row_index = (int("".join([x for x in first_index if not x.isalpha()])),int("".join([x for x in second_index if not x.isalpha()])))
+        
+        if minimum_index == None or maximum_index == None:
+            minimum_index = first_row_index
+            maximum_index = last_row_index
+        else:
+            minimum_index = min(first_row_index, minimum_index)
+            maximum_index = max(last_row_index, maximum_index)
     
+    return minimum_index, maximum_index
+
+def is_from_single_col(address):
+    col_chars = [x for x in address if x.isalpha()]
+    first = col_chars[0]
+    return all([x==first for x in col_chars])
