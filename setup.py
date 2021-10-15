@@ -9,7 +9,7 @@ requirements = ["PySimpleGUI>=4.0.0", "xlwings>=0.24.0", "openpyxl>=3.0.0",
 
 setup(
     name="Excelutilities",
-    version="0.0.9",
+    version="0.0.11",
     author="Ethan Horsfall",
     author_email="ethan.horsfall@gmail.com",
     description="Useful functions for writing code for Excel applications",
